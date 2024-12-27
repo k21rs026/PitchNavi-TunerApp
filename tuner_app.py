@@ -21,30 +21,19 @@ class PitchNavi(App):
 
     def build(self):
         Window.size = (320, 480)
-        #Window.size=(2360/2,1640/2)
         self.sm = ScreenManager()
-
         self.loading_screen = LoadingScreen(name='loading')
-        
-        
-        # Add loading screen
-        
-
         self.tuner_screen = TunerUI(self.switch_to_settings)
         self.settings_screen = SettingsScreen(self.switch_to_tuner)
         self.sm.add_widget(self.loading_screen)
         screen1 = Screen(name='tuner')
         screen1.add_widget(self.tuner_screen)
         self.sm.add_widget(screen1)
-
         screen2 = Screen(name='settings')
         screen2.add_widget(self.settings_screen)
         self.sm.add_widget(screen2)
-        #Clock.schedule_once(self.show_loading_screen, 0.1)
         self.sm.current = 'loading'
         Clock.schedule_once(self.start_tuner, 3)
-        #self.start_tuner(self)
-
         return self.sm
 
     def show_loading_screen(self, dt):
@@ -67,17 +56,9 @@ class PitchNavi(App):
     def audio_callback(self, data, frame, time, status):
         signal = np.frombuffer(data, dtype=np.int16)
         freq, mag = self.audio.process_audio(signal)
-        #print(mag)
         pixel = 10*(Window.width/320)
         note, sharp,octave,noteFreq = getNote(freq)
-
-        #self.tuner_screen.freq_label.color=(0,0,0,1)
-        
         if mag > self.settings_screen.MAG_THRESH:
-
-            
-            
-
             if self.settings_screen.language_spinner.text=='JP':
                 if note == 'C':
                     note = 'ド'
@@ -105,14 +86,10 @@ class PitchNavi(App):
                     note = 'シ'
             else:
                 note
-
             status = getCloser(freq, noteFreq)
-            
             freq_difference = freq - noteFreq
             direction = freq_difference * pixel
             window_size = Window.size
-            #print(f"Current window size: {window_size}")
-
             Clock.schedule_once(lambda dt: self.tuner_screen.update_line(direction))
             Clock.schedule_once(lambda dt: self.update_font())
             if self.settings_screen.frequency_label_checkbox.active==True:
@@ -124,17 +101,7 @@ class PitchNavi(App):
                 self.tuner_screen.octave_label.text = f"{octave}"
             else:
                 self.tuner_screen.octave_label.text = ""
-            
-
-            #print(mag)
-
             if status == 1:
-                #if sharp=='n':
-                    #self.tuner_screen.shownotesharp.text=''
-                #elif sharp=='#':
-                    #self.tuner_screen.shownotesharp.text='♯'
-                    #self.tuner_screen.shownotesharp.color=RED
-                
                 self.tuner_screen.flat.color = WHITE
                 self.tuner_screen.sharp.color = RED  
                 self.tuner_screen.note.color = RED 
@@ -142,12 +109,6 @@ class PitchNavi(App):
                 self.tuner_screen.noteFreq.color = RED
                 self.tuner_screen.octave_label.color = RED
             elif status == -1:
-
-                #if sharp=='n':
-                    #self.tuner_screen.shownotesharp.text=''
-                #elif sharp=='#':
-                    #self.tuner_screen.shownotesharp.text='♯'
-                    #self.tuner_screen.shownotesharp.color=RED
                 self.tuner_screen.sharp.color = WHITE
                 self.tuner_screen.flat.color = RED
                 self.tuner_screen.note.color = RED
@@ -155,12 +116,6 @@ class PitchNavi(App):
                 self.tuner_screen.noteFreq.color = RED
                 self.tuner_screen.octave_label.color = RED
             elif status == -2:
-
-                #if sharp=='n':
-                    #self.tuner_screen.shownotesharp.text=''
-                #elif sharp=='#':
-                    #self.tuner_screen.shownotesharp.text='♯'
-                    #self.tuner_screen.shownotesharp.color=ORANGE
                 self.tuner_screen.sharp.color = WHITE
                 self.tuner_screen.flat.color = ORANGE
                 self.tuner_screen.note.color = ORANGE
@@ -168,11 +123,6 @@ class PitchNavi(App):
                 self.tuner_screen.noteFreq.color = ORANGE
                 self.tuner_screen.octave_label.color = ORANGE
             elif status == 2:
-                #if sharp=='n':
-                    #self.tuner_screen.shownotesharp.text=''
-                #elif sharp=='#':
-                    #self.tuner_screen.shownotesharp.text='♯'
-                    #self.tuner_screen.shownotesharp.color=ORANGE
                 self.tuner_screen.flat.color = WHITE
                 self.tuner_screen.sharp.color = ORANGE
                 self.tuner_screen.note.color = ORANGE
@@ -180,11 +130,6 @@ class PitchNavi(App):
                 self.tuner_screen.noteFreq.color = ORANGE
                 self.tuner_screen.octave_label.color = ORANGE
             else:
-                #if sharp=='n':
-                    #self.tuner_screen.shownotesharp.text=''
-                #elif sharp=='#':
-                    #self.tuner_screen.shownotesharp.text='♯'
-                    #self.tuner_screen.shownotesharp.color=GREEN
                 self.tuner_screen.sharp.color = WHITE
                 self.tuner_screen.flat.color = WHITE
                 self.tuner_screen.note.color = GREEN

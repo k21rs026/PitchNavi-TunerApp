@@ -174,9 +174,6 @@ class TunerUI(BoxLayout):
         self.rect.pos=(Window.width*0.1, 0.1*Window.height)
         self.rect.size=(Window.width*0.9-Window.width*0.1, Window.height/3-Window.height*0.1)
 
-        #self.rect2.pos=(Window.width*0.25,0.45*Window.height)
-        #self.rect2.size=(Window.width*0.5,0.375*Window.height)
-        
         self.rect_size_multiplier_width=max(Window.height/5,Window.width/5)
         self.rect_size_multiplier_height=min(Window.height/4.5,Window.width/4.5)
         self.size_multiplier=min(Window.height/10,Window.width/10)
@@ -190,10 +187,6 @@ class TunerUI(BoxLayout):
         self.octave_label.font_size=40*self.font_size_multiplier
         self.shownoteflat.font_size=40*self.font_size_multiplier
         self.shownotesharp.font_size=60*self.font_size_multiplier
-
-        #self.note.size=(self.rect_size_multiplier_width*2,self.rect_size_multiplier_height)
-        #self.noteFreq.size=(self.rect_size_multiplier_width*2/2,self.rect_size_multiplier_height/2)
-        #self.octave_label.size=(self.size_multiplier,self.size_multiplier)
 
         self.noteFreq.pos_hint={'center_x': .5, 'center_y': .85}
         self.note.pos_hint={'center_x': .5, 'center_y': .65}
@@ -282,11 +275,10 @@ def add_rounded_background3(self,layout, color=LIGHT_GRAY, radius=[15]):
     :param radius: The radius for the rounded corners (default is 15).
     """
     with self.canvas.before:
-        Color(*color)  # Set the background color
+        Color(*color)  
         layout.rect = RoundedRectangle(
             size=layout.size, pos=layout.pos, radius=radius)
 
-    # Bind the size and position of the layout to update the rectangle size and position
     layout.bind(size=update_rect, pos=update_rect)
 
 def add_rounded_background(layout, color=LIGHT_GRAY, radius=[15]):
@@ -298,11 +290,9 @@ def add_rounded_background(layout, color=LIGHT_GRAY, radius=[15]):
     :param radius: The radius for the rounded corners (default is 15).
     """
     with layout.canvas.before:
-        Color(*color)  # Set the background color
+        Color(*color)  
         layout.rect = RoundedRectangle(
             size=layout.size, pos=layout.pos, radius=radius)
-
-    # Bind the size and position of the layout to update the rectangle size and position
     layout.bind(size=update_rect, pos=update_rect)
 
 def add_rounded_background2(label, color=GRAY, radius=[15]):
@@ -314,11 +304,9 @@ def add_rounded_background2(label, color=GRAY, radius=[15]):
     :param radius: The radius for the rounded corners (default is 15).
     """
     with label.canvas.before:
-        Color(*color)  # Set the background color
+        Color(*color)  
         label.rect = RoundedRectangle(
             size=label.size, pos=label.pos, radius=radius)
-
-    # Bind the size and position of the layout to update the rectangle size and position
     label.bind(size=update_rect, pos=update_rect)
 
 
@@ -433,7 +421,6 @@ class SettingsScreen(BoxLayout):
         scroll_view.add_widget(self.settings_layout)
         self.add_widget(scroll_view)
         Clock.schedule_once(self.square, 0)
-        #Clock.schedule_once(lambda dt: self.update_setting_size())
         # ---------------------end frequency settings-------------------
 
         # ---------------------end scrollable area-------------------
@@ -486,9 +473,6 @@ class SettingsScreen(BoxLayout):
             widget.width = width
             widget.height = height
 
-
-
-
 class LoadingScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -504,7 +488,6 @@ class LoadingScreen(Screen):
     def update_rect(self, *args):
         self.rect.pos = self.pos
         self.rect.size = self.size
-
 
 class CustomCheckBox(CheckBox):
     def __init__(self, **kwargs):
@@ -532,13 +515,11 @@ class CustomKnob(Slider):
         """Update the music note knob position."""
         self.canvas.after.clear()
         with self.canvas.after:
-            # Draw the music note
             knob_radius = self.height * 0.305
             knob_x = self.value_pos[0] - knob_radius
             knob_y = self.center_y - knob_radius
 
-            # Draw circle (note head)
-            Color(1, 1, 1, 1)  # Black color
+            Color(1, 1, 1, 1)  
             Ellipse(pos=(knob_x, knob_y), size=(knob_radius*2, knob_radius * 2))
 
             ellipse_x = knob_x+knob_radius*2/3
@@ -548,18 +529,11 @@ class CustomKnob(Slider):
             Color(0,0,0,1)
             Ellipse(pos=(ellipse_x, ellipse_y), size=(ellipse_width, ellipse_height))
 
-            line_x = knob_x+knob_radius*2/3.5 + ellipse_width  # Start at the right edge of the ellipse
-            line_y_start = ellipse_y + ellipse_height / 2.5  # Middle of the ellipse vertically
-            line_y_end = line_y_start + knob_radius / 2  # Extend upward
+            line_x = knob_x+knob_radius*2/3.5 + ellipse_width  
+            line_y_start = ellipse_y + ellipse_height / 2.5  
+            line_y_end = line_y_start + knob_radius / 2  
 
             Line(points=[line_x, line_y_start, line_x, ((knob_y + knob_radius*2 / 7) + (knob_radius*2 / 3) / 2) + knob_radius*2 / 2], width=2)
-
-
-            # Draw stem
-            
-
-            # Draw flag
-            
 
 KV = '''
 <RoundedSwitch>:
@@ -595,7 +569,6 @@ KV = '''
                 width: 2
 '''
 
-
 class RoundedSwitch(Widget):
     active = BooleanProperty(False)
     on_color = ColorProperty([37/255, 150/255, 190/255])
@@ -614,7 +587,6 @@ class RoundedSwitch(Widget):
             anim.start(knob)
             return True
         return super().on_touch_down(touch)
-
 
 class TitleWithRectangle(AnchorLayout):
     def __init__(self, **kwargs):

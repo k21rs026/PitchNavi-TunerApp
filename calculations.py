@@ -17,11 +17,8 @@ ORANGE = [1, 0.502, 0, 1]
 TARGET_FREQUENCY = 440.0  
 ANGLE_RANGE = 90          
 FREQUENCY_RANGE = 5
-
 NOTES = ['C n', 'C #', 'D n', 'D #', 'E n', 'F n', 'F #', 'G n', 'G #', 'A n', 'A #', 'B n']
-SOLFEGE = ['ド','ド#','レ','レ#','ミ','ファ','ファ#','ソ','ソ#','ラ','ラ#','シ']
 SEMITONES = {'C n': -9, 'C #': -8, 'D n': -7, 'D #': -6, 'E n': -5, 'F n': -4, 'F #': -3, 'G n': -2, 'G #': -1, 'A n': 0, 'A #': 1, 'B n': 2}
-SEMITONESJP = {'ド': -9, 'ド#': -8, 'レ': -7, 'レ#': -6, 'ミ': -5, 'ファ': -4, 'ファ#': -3, 'ソ': -2, 'ソ#': -1, 'ラ': 0, 'ラ#': 1, 'シ': 2}
 
 def calcFreq():
     frequencies = {}
